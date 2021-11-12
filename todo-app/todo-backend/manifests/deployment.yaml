@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: rikusarlin/todo-backend:version1
+          image: rikusarlin/todo-backend:version2
