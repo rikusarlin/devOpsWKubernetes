@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: todo-backend-svc
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: todo-backend
   ports:
-    - port: 2345
+    - name: http
+      nodePort: 30080
       protocol: TCP
+      port: 1234
       targetPort: 3000
