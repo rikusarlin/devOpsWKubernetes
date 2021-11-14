@@ -11,18 +11,23 @@ spec:
     metadata:
       labels:
         app: log-output
-    spec:
+    spec:      
       volumes:
-        - name: shared-dir
+        - name: shared-dir1
+          persistentVolumeClaim:
+            claimName: ping-pong-claim
+        - name: shared-dir2
           emptyDir: {}
       containers:
         - name: log-reader
-          image: rikusarlin/log-reader:version1
+          image: rikusarlin/log-reader:version3
           volumeMounts:
-          - name: shared-dir
-            mountPath: /tmp
+          - name: shared-dir1
+            mountPath: /tmp/ping-pong
+          - name: shared-dir2
+            mountPath: /tmp/timestamp
         - name: timestamp-writer
-          image: rikusarlin/timestamp-writer:version1
+          image: rikusarlin/timestamp-writer:version3
           volumeMounts:
-          - name: shared-dir
-            mountPath: /tmp
+          - name: shared-dir2
+            mountPath: /tmp/timestamp

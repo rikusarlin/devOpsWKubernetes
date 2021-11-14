@@ -16,9 +16,11 @@ app.listen(port, function() {
   console.log(`Server started in port ${port}!`)
 });
 
-const directory = path.join('/', 'tmp');
+const directory = path.join('/', 'tmp', 'timestamp');
+const directory2 = path.join('/', 'tmp', 'ping-pong');
 const filePathTimestamp = path.join(directory, 'timestamp.txt')
 const filePathHash = path.join(directory, 'hash.txt')
+const filePathHits = path.join(directory2, 'hits.txt')
 
 async function fileAlreadyExists(fileName) {
   try {
@@ -41,6 +43,7 @@ var currentStatus;
 const showAndWriteHashAndTimestamp = async () => {
   var hashData;
   var timestamp;
+  var hits;
   // Both ends can create random hash, so let us start with that
   const hashFileExists = await fileAlreadyExists(filePathHash);
   if(hashFileExists){
@@ -49,6 +52,7 @@ const showAndWriteHashAndTimestamp = async () => {
     hashData = uuidv4();
     writeStringToFile(filePathHash, hashData);
   }
+
   // This end reads timestamp created by the other end (by default we say it is not defined)
   const timestampFileExists = await fileAlreadyExists(filePathTimestamp);
   if(timestampFileExists){
@@ -56,7 +60,16 @@ const showAndWriteHashAndTimestamp = async () => {
   } else {
     timestamp = "Timestamp not defined"
   }
-  currentStatus = timestamp + " " + hashData;
+
+  // This end also reads ping-pong hit counter
+  const hitsFileExists = await fileAlreadyExists(filePathHits);
+  if(hitsFileExists){
+    hits = await fs.promises.readFile(filePathHits);
+  } else {
+    hits = "0"
+  }
+  
+  currentStatus = timestamp + " " + hashData + "\n" + "Ping / Pongs: "+hits;
   console.log(currentStatus);
   setTimeout(showAndWriteHashAndTimestamp, 5000);
 };

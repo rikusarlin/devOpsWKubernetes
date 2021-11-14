@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import path from 'path';
 
-const directory = path.join('/', 'tmp');
+const directory = path.join('/', 'tmp', 'timestamp');
 const filePathTimestamp = path.join(directory, 'timestamp.txt');
 const filePathHash = path.join(directory, 'hash.txt');
 

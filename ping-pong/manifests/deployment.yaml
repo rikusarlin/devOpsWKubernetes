@@ -12,6 +12,27 @@ spec:
       labels:
         app: ping-pong
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+        - name: shared-dir1
+          persistentVolumeClaim:
+            claimName: ping-pong-claim
       containers:
         - name: ping-pong
-          image: rikusarlin/ping-pong:version1
+          image: rikusarlin/ping-pong:version3
+          volumeMounts:
+          - name: shared-dir1
+            mountPath: /tmp/ping-pong
+      initContainers:
+        - name: change-ownership-container
+          image: busybox
+          command: ["/bin/chown","-R","1000:1000", "/tmp/ping-pong"]
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          volumeMounts:
+          - name: shared-dir1
+            mountPath: /tmp/ping-pong
