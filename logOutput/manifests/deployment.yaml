@@ -12,6 +12,17 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: shared-dir
+          emptyDir: {}
       containers:
-        - name: log-output
-          image: rikusarlin/log-output:version2
+        - name: log-reader
+          image: rikusarlin/log-reader:version1
+          volumeMounts:
+          - name: shared-dir
+            mountPath: /tmp
+        - name: timestamp-writer
+          image: rikusarlin/timestamp-writer:version1
+          volumeMounts:
+          - name: shared-dir
+            mountPath: /tmp
