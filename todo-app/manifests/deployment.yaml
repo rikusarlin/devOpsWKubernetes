@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+        - name: shared-dir
+          persistentVolumeClaim:
+            claimName: todo-claim
+      containers:
+        - name: todo-backend
+          image: rikusarlin/todo-backend:version5
+          volumeMounts:
+          - name: shared-dir
+            mountPath: /tmp/pictures
+      initContainers:
+        - name: change-ownership-container
+          image: busybox
+          command: ["/bin/chown","-R","1000:1000", "/tmp/pictures"]
+          securityContext:
+            runAsUser: 0
+            privileged: true
+          volumeMounts:
+          - name: shared-dir
+            mountPath: /tmp/pictures
