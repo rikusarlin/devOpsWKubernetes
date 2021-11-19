@@ -1,17 +1,19 @@
 const express = require('express');
+const bodyParser= require('body-parser')
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
-
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+app.use(cors());
+app.use(express.json())
+app.use(bodyParser.json());
+const port = 3001;
 
 const directory = path.join('/', 'tmp', 'pictures');
 const filePathTimestamp = path.join(directory, 'fetch-timestamp.txt')
 const filePathPicture = path.join(directory, 'picture.webp')
-
-app.use('/todo/pictures', express.static(directory));
 
 async function fileAlreadyExists(fileName) {
   try {
@@ -36,7 +38,8 @@ const deleteFile = (filePath) => {
     }
 })}; 
 
-app.get('/todo', async function(req, res) {
+app.get('/background', async function(req, res) {
+  console.log("In GET /background")
   var fileNeedsToBeFetched = false;
   // Fetch a file from outside server once each day, store in local file / pvc
 
@@ -76,8 +79,27 @@ app.get('/todo', async function(req, res) {
     }
   }
   
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.send(await fs.promises.readFile(filePathPicture));
 });
+
+
+var todos = [{"id":1, "text":"Get a life"},{"id":2, "text":"Exercise more"}];
+var n_todos = 2;
+
+app.get('/todos', (req, res) => {
+  console.log("in GET /todos");
+  res.json(todos);
+})
+
+app.post('/todos', (req, res) => {
+  console.log("in POST /todos");
+  console.log("req.body: "+req.body);
+  console.log("req.body.text: "+req.body.text);
+  n_todos++;
+  const newTodo = {"id": n_todos, "text": req.body.text};
+  todos.push(newTodo);
+  res.json(newTodo);
+})
 
 app.listen(port, function() {
   console.log(`Server started in port ${port}!`)
