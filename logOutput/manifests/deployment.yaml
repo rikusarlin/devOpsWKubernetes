@@ -13,19 +13,17 @@ spec:
         app: log-output
     spec:      
       volumes:
-        - name: shared-dir1
-          persistentVolumeClaim:
-            claimName: ping-pong-claim
         - name: shared-dir2
           emptyDir: {}
       containers:
         - name: log-reader
-          image: rikusarlin/log-reader:version3
+          image: rikusarlin/log-reader:version4
           volumeMounts:
-          - name: shared-dir1
-            mountPath: /tmp/ping-pong
           - name: shared-dir2
             mountPath: /tmp/timestamp
+          env:
+          - name: PINGPONG_URL
+            value: "http://ping-pong-svc:2346/hits"
         - name: timestamp-writer
           image: rikusarlin/timestamp-writer:version3
           volumeMounts:

@@ -22,7 +22,7 @@ spec:
             claimName: ping-pong-claim
       containers:
         - name: ping-pong
-          image: rikusarlin/ping-pong:version3
+          image: rikusarlin/ping-pong:version4
           volumeMounts:
           - name: shared-dir1
             mountPath: /tmp/ping-pong

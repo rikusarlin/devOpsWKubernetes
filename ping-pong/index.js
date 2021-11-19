@@ -6,7 +6,7 @@ const directory = path.join('/', 'tmp', 'ping-pong');
 const filePathHits = path.join(directory, 'hits.txt');
 
 const app = express();
-const port = 3001;
+const port = 3002;
 
 async function fileAlreadyExists(fileName) {
   try {
@@ -33,6 +33,15 @@ app.get('/pingpong', async function(req, res) {
   currentHits++;
   res.send(`pong ${currentHits}`);
   writeStringToFile(filePathHits, currentHits+"");  
+});
+
+app.get('/hits', async function(req, res) {
+  var currentHits=0;
+  const hitsFileExists = await fileAlreadyExists(filePathHits);
+  if(hitsFileExists){
+    currentHits = parseInt(await fs.promises.readFile(filePathHits));
+  }
+  res.send(`${currentHits}`);
 });
 
 app.listen(port, function() {

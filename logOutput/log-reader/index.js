@@ -1,7 +1,11 @@
+import dotenv from 'dotenv';
 import express from 'express'
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
+
+dotenv.config();
 
 var currentStatus;
 
@@ -17,10 +21,8 @@ app.listen(port, function() {
 });
 
 const directory = path.join('/', 'tmp', 'timestamp');
-const directory2 = path.join('/', 'tmp', 'ping-pong');
 const filePathTimestamp = path.join(directory, 'timestamp.txt')
 const filePathHash = path.join(directory, 'hash.txt')
-const filePathHits = path.join(directory2, 'hits.txt')
 
 async function fileAlreadyExists(fileName) {
   try {
@@ -43,7 +45,6 @@ var currentStatus;
 const showAndWriteHashAndTimestamp = async () => {
   var hashData;
   var timestamp;
-  var hits;
   // Both ends can create random hash, so let us start with that
   const hashFileExists = await fileAlreadyExists(filePathHash);
   if(hashFileExists){
@@ -61,13 +62,9 @@ const showAndWriteHashAndTimestamp = async () => {
     timestamp = "Timestamp not defined"
   }
 
-  // This end also reads ping-pong hit counter
-  const hitsFileExists = await fileAlreadyExists(filePathHits);
-  if(hitsFileExists){
-    hits = await fs.promises.readFile(filePathHits);
-  } else {
-    hits = "0"
-  }
+  // Read ping-pong hit counter via rest endpoint
+  const response = await axios.get(process.env.PINGPONG_URL);
+  const hits = response.data;
   
   currentStatus = timestamp + " " + hashData + "\n" + "Ping / Pongs: "+hits;
   console.log(currentStatus);
