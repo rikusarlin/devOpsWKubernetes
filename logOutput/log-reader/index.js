@@ -66,7 +66,7 @@ const showAndWriteHashAndTimestamp = async () => {
   const response = await axios.get(process.env.PINGPONG_URL);
   const hits = response.data;
   
-  currentStatus = timestamp + " " + hashData + "\n" + "Ping / Pongs: "+hits;
+  currentStatus = process.env.MESSAGE + "\n" + timestamp + " " + hashData + "\n" + "Ping / Pongs: "+hits;
   console.log(currentStatus);
   setTimeout(showAndWriteHashAndTimestamp, 5000);
 };

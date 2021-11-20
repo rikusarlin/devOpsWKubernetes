@@ -18,13 +18,18 @@ spec:
           emptyDir: {}
       containers:
         - name: log-reader
-          image: rikusarlin/log-reader:version4
+          image: rikusarlin/log-reader:version5
           volumeMounts:
           - name: shared-dir2
             mountPath: /tmp/timestamp
           env:
           - name: PINGPONG_URL
             value: "http://ping-pong-svc:2346/hits"
+          - name: MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: log-output-configmap
+                key: message
         - name: timestamp-writer
           image: rikusarlin/timestamp-writer:version3
           volumeMounts:
