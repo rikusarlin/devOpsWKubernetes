@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tempdata-pv
+  name: logping-pv
+  namespace: logping-namespace
 spec:
   storageClassName: manual
   capacity:
