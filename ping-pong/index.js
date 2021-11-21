@@ -1,47 +1,28 @@
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
+import db from './queries.js';
+import dotenv from 'dotenv';
 
-const directory = path.join('/', 'tmp', 'ping-pong');
-const filePathHits = path.join(directory, 'hits.txt');
+dotenv.config();
 
 const app = express();
-const port = 3002;
-
-async function fileAlreadyExists(fileName) {
-  try {
-    await fs.promises.access(fileName, fs.constants.F_OK);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-const writeStringToFile = (filePath, stringToWrite) => {
-  fs.writeFileSync(filePath, stringToWrite, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-})}; 
+const port = process.env.PORT;
 
 app.get('/pingpong', async function(req, res) {
-  var currentHits=0;
-  const hitsFileExists = await fileAlreadyExists(filePathHits);
-  if(hitsFileExists){
-    currentHits = parseInt(await fs.promises.readFile(filePathHits));
-  }
-  currentHits++;
+  await db.updateHits();
+  const currentHits = await db.getHits();
+  console.log("currentHits from db:"+currentHits);
   res.send(`pong ${currentHits}`);
-  writeStringToFile(filePathHits, currentHits+"");  
 });
 
 app.get('/hits', async function(req, res) {
-  var currentHits=0;
-  const hitsFileExists = await fileAlreadyExists(filePathHits);
-  if(hitsFileExists){
-    currentHits = parseInt(await fs.promises.readFile(filePathHits));
-  }
-  res.send(`${currentHits}`);
+  console.log("POSTGRE_HOST: "+process.env.POSTGRE_HOST);
+  console.log("POSTGRE_PORT: "+process.env.POSTGRE_PORT);
+  console.log("POSTGRE_DB: "+process.env.POSTGRE_DB);
+  console.log("POSTGRE_USER: "+process.env.POSTGRE_USER);
+  console.log("POSTGRE_PASSWORD: "+process.env.POSTGRE_PASSWORD);
+  const currentHits= await db.getHits();
+  console.log("currentHits from db:"+JSON.stringify(currentHits));
+  res.send(`${currentHits}`);  
 });
 
 app.listen(port, function() {

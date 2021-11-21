@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: ping-pong-configmap
+    namespace: logping-namespace
+data:
+    postgre_host: ENC[AES256_GCM,data:ZZeoG1uaoRXuif8E8w==,iv:Y8ONoS94qf5tPsK5j8fyIybstBmAOgqnKoyOX3VZzaI=,tag:UbBuQ2qzOm2b6kY7brErSA==,type:str]
+    postgre_port: ENC[AES256_GCM,data:ZauQeg==,iv:p1T+hges/RGWa4zVZxBTTUxEW3T9i/OcvuxC/F9ndnY=,tag:WkMlGmpSrcDgdT09/xjKgw==,type:str]
+    postgre_db: ENC[AES256_GCM,data:a7i6DyOUTH8=,iv:3DLHuYBy9XuVgcWTYkV/1eBiOLBQiTzo1j6qXgAM7R4=,tag:TEQy1PH4PPr6eZn/cmD1SQ==,type:str]
+    postgre_user: ENC[AES256_GCM,data:yoARtMQIeNw=,iv:VDhg0J3CiH9c4YbMk5WSKbzKVjJf+PJeQcM+5z/B4w0=,tag:bm8ekRHihfA5/jSrRUV29A==,type:str]
+    postgre_password: ENC[AES256_GCM,data:gg4xcIlEr/Eb9I+k,iv:Ic4qm/NZe8wIXJo2zGfy2pjZnn7ziIRdac0JmuxSEK0=,tag:3ubzseqgLKX6Nsq2SwvN4Q==,type:str]
+    port: ENC[AES256_GCM,data:sElEuA==,iv:MgBO55CTVu0nWJO8BYzzRl3/UYxawSMfgme2ZRHgp/o=,tag:GL/QHyQ8mrCtt9BNiXXwwg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1xmpqekhaa5t4r3p6enmxav6vdandty7adpxg9xvxkmv8dfe7pppqm47rdp
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpSTNTYnF2bDJacWptc2M2
+            SWRIVHNMTkFxYXJJbUJzdG9nTEpvdkIzOFVJCkREN1VwNzJSLzdDWjNBakd0SVNW
+            cVJpbDdzNUpJbDFMd0VhYnRtWFJHQXcKLS0tIFZMU1NEL3hIb1h4UlNNU3czRHN1
+            QTh6eXpuY0dweE4zYlVpYUVIbmFSb0EKnmozZfdF4vF9fQYcey6db+oXzja+aiVF
+            eyJqO3vOI8u3USK6tWtkVwg4+wsaz5GsLXIpTzSli5il0B/nHAVqlw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-11-21T20:00:28Z"
+    mac: ENC[AES256_GCM,data:lok0fT3QXbifeK9emhiL8jhVJA7g9eBRRuKaIpBYdAtSz6Aq5Z8ROskAvgQIr8nj5+CSmG+cjys+mwDqFf71nXA7v0auu7b2ubcccCrav0kFL2pb9+VuGqbnuLtpYBvXhUv9g5ev/9WW7WQeXNcOekNbfTCXxmlwHLtsFM9kTy0=,iv:xPMv79OvbqHCL31tzMK1mtqZoOtXHfvRuY+BoN3Uhds=,tag:FP5oRhHHr0H656b9XLo3eg==,type:str]
+    pgp: []
+    encrypted_regex: ^(data)$
+    version: 3.7.1

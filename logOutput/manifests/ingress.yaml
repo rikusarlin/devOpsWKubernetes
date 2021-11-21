@@ -21,3 +21,10 @@ spec:
             name: ping-pong-svc
             port:
               number: 2346
+      - path: /hits
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-svc
+            port:
+              number: 2346

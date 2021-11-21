@@ -13,27 +13,37 @@ spec:
       labels:
         app: ping-pong
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-      volumes:
-        - name: shared-dir1
-          persistentVolumeClaim:
-            claimName: ping-pong-claim
       containers:
         - name: ping-pong
-          image: rikusarlin/ping-pong:version4
-          volumeMounts:
-          - name: shared-dir1
-            mountPath: /tmp/ping-pong
-      initContainers:
-        - name: change-ownership-container
-          image: busybox
-          command: ["/bin/chown","-R","1000:1000", "/tmp/ping-pong"]
-          securityContext:
-            runAsUser: 0
-            privileged: true
-          volumeMounts:
-          - name: shared-dir1
-            mountPath: /tmp/ping-pong
+          image: rikusarlin/ping-pong:version7
+          env:
+          - name: POSTGRE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: postgre_host
+          - name: POSTGRE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: postgre_port
+          - name: POSTGRE_DB
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: postgre_db
+          - name: POSTGRE_USER
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: postgre_user
+          - name: POSTGRE_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: postgre_password
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: ping-pong-configmap
+                key: port
