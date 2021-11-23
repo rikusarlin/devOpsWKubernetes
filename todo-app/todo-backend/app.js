@@ -1,15 +1,22 @@
-const express = require('express');
-const bodyParser= require('body-parser')
-const path = require('path');
-const fs = require('fs');
-const axios = require('axios');
-const cors = require('cors');
+import db from './queries.js';
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import fs from 'fs';
+import axios from 'axios';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const port = process.env.PORT;
+
+console.log("process.env.PORT: "+process.env.PORT);
 
 const app = express();
 app.use(cors());
 app.use(express.json())
 app.use(bodyParser.json());
-const port = 3001;
 
 const directory = path.join('/', 'tmp', 'pictures');
 const filePathTimestamp = path.join(directory, 'fetch-timestamp.txt')
@@ -82,23 +89,18 @@ app.get('/background', async function(req, res) {
   res.send(await fs.promises.readFile(filePathPicture));
 });
 
-
-var todos = [{"id":1, "text":"Get a life"},{"id":2, "text":"Exercise more"}];
-var n_todos = 2;
-
-app.get('/todos', (req, res) => {
+app.get('/todos', async (req, res) => {
   console.log("in GET /todos");
-  res.json(todos);
+  const rows = await db.getAllTodos();
+  res.json(rows);
 })
 
-app.post('/todos', (req, res) => {
+app.post('/todos', async (req, res) => {
   console.log("in POST /todos");
-  console.log("req.body: "+req.body);
-  console.log("req.body.text: "+req.body.text);
-  n_todos++;
-  const newTodo = {"id": n_todos, "text": req.body.text};
-  todos.push(newTodo);
-  res.json(newTodo);
+  //console.log("req.body.text: "+req.body.text);
+  const newId = await db.insertTodo(req.body.text);
+  const newTodo = await db.getTodo(newId);
+  res.status(200).send(newTodo);
 })
 
 app.listen(port, function() {

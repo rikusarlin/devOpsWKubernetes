@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: ping-pong-configmap
+    namespace: logping-namespace
+data:
+    postgre_host: 10.43.234.222
+    postgre_port: "5432"
+    postgre_db: pingpong
+    postgre_user: postgres
+    postgre_password: testpassword
+    port: "3002"

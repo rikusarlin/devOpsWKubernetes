@@ -23,12 +23,15 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-backend
-          image: rikusarlin/todo-backend:version1
+          image: rikusarlin/todo-backend:version9
           volumeMounts:
           - name: shared-dir
             mountPath: /tmp/pictures
+          envFrom:
+          - configMapRef:
+              name: todo-configmap
         - name: todo-frontend
-          image: rikusarlin/todo-frontend:version3
+          image: rikusarlin/todo-frontend:version9
       initContainers:
         - name: change-ownership-container
           image: busybox

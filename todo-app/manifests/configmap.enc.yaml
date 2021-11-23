@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: todo-configmap
+    namespace: todo-namespace
+data:
+    POSTGRE_HOST: ENC[AES256_GCM,data:iE00lnARUJduIha96QkSpkI=,iv:Tkega2D7wrzF3xbo2p7MmoEFfzl1nZVGF1NYYXdiw6U=,tag:oSIUEmN2SPZQynuYg5AasQ==,type:str]
+    POSTGRE_PORT: ENC[AES256_GCM,data:xETVMA==,iv:+yx++TCyiCmiW+6P65e9vGDLPPgioQ1eb+NPHTLE4DI=,tag:4tWhrxnBxfa5uMLIOnOA5A==,type:str]
+    POSTGRE_DB: ENC[AES256_GCM,data:Hk917w==,iv:iqG2Dd2eESU4Mk/ex16Ek0kxt9u3qYe+u6m11KPftKw=,tag:pG4228XAvK6ll/Uq/sf5/Q==,type:str]
+    POSTGRE_USER: ENC[AES256_GCM,data:z8+Wddmu2Xo=,iv:+d/qBgDw6KLZee+ypssMpp3X5j2+Lfhg8GzgTPtNzAo=,tag:/o97AO25204KnrlWmGMptg==,type:str]
+    POSTGRE_PASSWORD: ENC[AES256_GCM,data:JdJX+32pAJEIBILJ,iv:GbNKE9S6fpBdq6e74B/2nO+2RYDIDIr0IQwraAf63wk=,tag:A2RSNqIynYNQKdmR3wRkbw==,type:str]
+    PORT: ENC[AES256_GCM,data:RDa5tA==,iv:uiMbz7QicANC+iyRFYsz0zEAXxr42gfHYKTBu4Wzctg=,tag:tez6MRI1jEd6DRWeksArqQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1xmpqekhaa5t4r3p6enmxav6vdandty7adpxg9xvxkmv8dfe7pppqm47rdp
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGbzFPRVNTVE93R09nek51
+            QVRPSzJsL0dRbXFoWnkvYUNOYTErOTJTMmprCkpEZG9HeG9aUUMrSjRKOXB2a3dx
+            bWpkUW1OekdBcVgxYzd0SzlCbGtjL3cKLS0tIHptaG5FRFZDNXlQaHM2OXZ5bVYw
+            NnBtYzhvTERvbUpEZmVra2pPaG1CdVEKynw8853yJLYIaFjLP753u6+N9rQn3Yog
+            RJCKF2BJSS008/XW/NRiBxXU4gjUgxzwEtmjQWM8SuBOItu+19LFQQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-11-23T20:16:26Z"
+    mac: ENC[AES256_GCM,data:LtcYYuya/e4wy12NCcrgyp3CG/aJ80qhSEv+vMAObGj2hW0yJRu+YHDZXnI6KWB30yUIsFrqggtpRcjT6V86edwylOwpRHZKCOdSekSKBsAuoduoQPbYTDauieHwxkHxYUfj/TaUAVz5QBY1fjlSV5/zGLK1VrqIxxQb8fIA3wE=,iv:CWvKLSUwS5oivvBwld+siHdHkQBSZeDxFZb2EuCBBJ8=,tag:ehLfZE3NjUOFcuosqXx2Aw==,type:str]
+    pgp: []
+    encrypted_regex: ^(data)$
+    version: 3.7.1

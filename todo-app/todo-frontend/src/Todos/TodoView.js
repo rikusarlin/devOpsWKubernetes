@@ -8,11 +8,9 @@ const TodoView = () => {
   const [todos, setTodos] = useState([])
 
   const backgroundImageUrl = process.env.REACT_APP_BACKGROUND_IMAGE_URL
-  console.log("Background image url: "+backgroundImageUrl);
 
   const refreshTodos = async () => {
     const { data } = await axios.get('/todos')
-    console.log("Todos: "+todos)
     setTodos(data)
   }
 

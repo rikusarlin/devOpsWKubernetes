@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql-todo-db
+  namespace: todo-namespace
+spec:
+  serviceName: postgresql-db-service
+  selector:
+    matchLabels:
+      app: postgresql-todo-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgresql-todo-db
+    spec:
+      containers:
+        - name: postgresql-todo-db
+          image: postgres:latest
+          volumeMounts:
+            - name: postgresql-todo-disk
+              mountPath: /data
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_password
+            - name: PGDATA
+              value: /data/pgdata
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresql-todo-disk
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 500M
