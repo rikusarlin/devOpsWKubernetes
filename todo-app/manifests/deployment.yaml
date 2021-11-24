@@ -23,7 +23,7 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-backend
-          image: rikusarlin/todo-backend:version10
+          image: rikusarlin/todo-backend:version11
           volumeMounts:
           - name: shared-dir
             mountPath: /tmp/pictures

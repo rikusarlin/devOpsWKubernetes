@@ -113,10 +113,16 @@ app.post('/generaterandomtodo', async (req, res) => {
 
 app.post('/todos', async (req, res) => {
   console.log("in POST /todos");
-  //console.log("req.body.text: "+req.body.text);
-  const newId = await db.insertTodo(req.body.text);
-  const newTodo = await db.getTodo(newId);
-  res.status(200).send(newTodo);
+  console.log("Adding todo: "+req.body.text);
+  if(req.body.text.length>140){
+    const message = `Todo max length is 140 chars and ${req.body.text} is ${req.body.text.length} long.`;
+    console.log(message);
+    res.status(403).send(message);
+  } else {
+    const newId = await db.insertTodo(req.body.text);
+    const newTodo = await db.getTodo(newId);
+    res.status(200).send(newTodo);  
+  }
 })
 
 app.listen(port, function() {
