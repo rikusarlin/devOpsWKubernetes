@@ -21,6 +21,13 @@ spec:
             name: todo-backend-svc
             port:
               number: 2348
+      - path: /generaterandomtodo
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-backend-svc
+            port:
+              number: 2348
       - path: /background
         pathType: Prefix
         backend:

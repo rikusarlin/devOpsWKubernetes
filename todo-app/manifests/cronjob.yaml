@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: random-todo-generator
+  namespace: todo-namespace
+spec:
+  schedule: "0 6 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: random-todo-generator
+            image: curlimages/curl
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Starting CronJob"; resp=$(curl -X POST -I --http2 "http://todo-backend-svc:2348/generaterandomtodo") ; echo $resp; exit 0
+          restartPolicy: OnFailure

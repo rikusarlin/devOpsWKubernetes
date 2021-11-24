@@ -11,8 +11,6 @@ dotenv.config();
 
 const port = process.env.PORT;
 
-console.log("process.env.PORT: "+process.env.PORT);
-
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -89,10 +87,28 @@ app.get('/background', async function(req, res) {
   res.send(await fs.promises.readFile(filePathPicture));
 });
 
+const getRandomWikiUrl = async () => {
+  const res = await axios.get("https://en.wikipedia.org/wiki/Special:Random", {
+    maxRedirects: 0,
+    validateStatus: null
+  });
+  console.log("res.headers.location: "+res.headers.location);
+  return res.headers.location;
+}
+
 app.get('/todos', async (req, res) => {
   console.log("in GET /todos");
   const rows = await db.getAllTodos();
   res.json(rows);
+})
+
+app.post('/generaterandomtodo', async (req, res) => {
+  console.log("in POST /generaterandomtodo");
+  const randomURL = await getRandomWikiUrl();
+  console.log("randomURL: "+randomURL);
+  const newId = await db.insertTodo("Read "+randomURL);
+  const newTodo = await db.getTodo(newId);
+  res.status(200).send(newTodo);
 })
 
 app.post('/todos', async (req, res) => {
