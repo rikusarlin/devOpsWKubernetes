@@ -4,7 +4,7 @@ metadata:
   name: log-output-svc
   namespace: logping-namespace
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: log-output
   ports:
