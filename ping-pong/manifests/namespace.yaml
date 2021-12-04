@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: logping-namespace
+  labels:
+    name: logping-namespace

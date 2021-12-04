@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16 as builder
 
 WORKDIR /usr/src/app
 
@@ -8,6 +8,12 @@ RUN REACT_APP_BACKEND_URL=http://localhost:8081 REACT_APP_BACKGROUND_IMAGE_URL=h
 
 RUN REACT_APP_BACKEND_URL=http://localhost:8081 REACT_APP_BACKGROUND_IMAGE_URL=http://localhost:8081/background npm run build
 
-RUN npm install -g serve
+FROM nginx:alpine
 
-CMD ["serve", "build"]
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf *
+
+COPY --from=builder /usr/src/app .
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
