@@ -23,7 +23,7 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-backend
-          image: PROJECT/IMAGE_BACKEND
+          image: IMAGE_BACKEND
           volumeMounts:
           - name: shared-dir
             mountPath: /tmp/pictures
@@ -59,7 +59,7 @@ spec:
                   name: todo-configmap
                   key: port
         - name: todo-frontend
-          image: PROJECT/IMAGE_FRONTEND
+          image: IMAGE_FRONTEND
       initContainers:
         - name: change-ownership-container
           image: busybox
