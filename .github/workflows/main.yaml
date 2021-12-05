@@ -34,7 +34,7 @@ jobs:
       run: |-
         docker build \
           --tag "gcr.io/$PROJECT_ID/$IMAGE_BACKEND:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" \
-          todo-backend
+          todo-app/todo-backend
 
     - name: Publish backend
       run: |-
@@ -44,7 +44,7 @@ jobs:
       run: |-
         docker build \
           --tag "gcr.io/$PROJECT_ID/$IMAGE_FRONTEND:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" \
-          todo-frontend 
+          todo-app/todo-frontend 
 
     - name: Publish frontend
       run: |-
