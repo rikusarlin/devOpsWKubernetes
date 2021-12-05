@@ -12,7 +12,6 @@ resources:
 - ./todo-app/manifests/postgresql-statefulset.yaml
 images:
 # These will be replaced by real names in build pipeline
-# Namespace will be branch name
 - name: IMAGE_BACKEND
   newName: rikusarlin/todo-backend:version12
 - name: IMAGE_FRONTEND
