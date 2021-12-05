@@ -11,6 +11,7 @@ resources:
 - ./todo-app/manifests/postgresql-service.yaml
 - ./todo-app/manifests/postgresql-statefulset.yaml
 images:
+# These will be replaced by real names in build pipeline
 - name: IMAGE_BACKEND
   newName: rikusarlin/todo-backend:version12
 - name: IMAGE_FRONTEND
