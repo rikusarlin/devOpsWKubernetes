@@ -10,6 +10,7 @@ resources:
 - ./todo-app/manifests/configmap.yaml
 - ./todo-app/manifests/postgresql-service.yaml
 - ./todo-app/manifests/postgresql-statefulset.yaml
+- ./todo-app/manifests/namespace.yaml
 images:
 - name: PROJECT/IMAGE_BACKEND
   newName: rikusarlin/todo-backend:version12

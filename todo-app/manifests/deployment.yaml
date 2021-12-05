@@ -23,6 +23,7 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-backend
+          namespace: todo-namespace
           image: PROJECT/IMAGE_BACKEND
           volumeMounts:
           - name: shared-dir
@@ -59,6 +60,7 @@ spec:
                   name: todo-configmap
                   key: port
         - name: todo-frontend
+          namespace: todo-namespace
           image: PROJECT/IMAGE_FRONTEND
       initContainers:
         - name: change-ownership-container
