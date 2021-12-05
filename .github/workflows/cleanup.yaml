@@ -1,0 +1,39 @@
+name: Cleanup stuff when branch is deleted
+
+on:
+  delete
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-b
+  IMAGE_FRONTEND: todo-frontend
+  IMAGE_BACKEND: todo-backend
+
+jobs:
+  delete-stuff-of-branch-deletion:
+    name: Delete stuff from GKE and its image registry upon branch deletion
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: ${{ secrets.GKE_PROJECT }}
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        export_default_credentials: true
+
+    - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+    - name: Delete all from GKE namespace
+      run: |-
+        kubectl delete all --all -n ${GITHUB_REF#refs/heads/}
+
+    - name: Delete backend image from GCR
+      run: |-
+        docker image rm "gcr.io/$PROJECT_ID/$IMAGE_BACKEND:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
+
+    - name: Delete fronted image from GCR
+      run: |-
+        docker image rm "gcr.io/$PROJECT_ID/$IMAGE_FRONTEND:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
+
