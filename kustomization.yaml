@@ -12,7 +12,7 @@ resources:
 - ./todo-app/manifests/postgresql-statefulset.yaml
 - ./todo-app/manifests/namespace.yaml
 images:
-- name: PROJECT/IMAGE_BACKEND
+- name: IMAGE_BACKEND
   newName: rikusarlin/todo-backend:version12
-- name: PROJECT/IMAGE_FRONTEND
+- name: IMAGE_FRONTEND
   newName: rikusarlin/todo-frontend:version12
