@@ -29,12 +29,3 @@ jobs:
     - name: Delete all from GKE namespace
       run: |-
         kubectl delete all --all -n ${{ github.event.ref }}
-
-    - name: Delete backend image from GCR
-      run: |-
-        docker image rm "gcr.io/$PROJECT_ID/$IMAGE_BACKEND:${{ github.event.ref }}-$GITHUB_SHA"
-
-    - name: Delete fronted image from GCR
-      run: |-
-        docker image rm "gcr.io/$PROJECT_ID/$IMAGE_FRONTEND:${{ github.event.ref }}-$GITHUB_SHA"
-
