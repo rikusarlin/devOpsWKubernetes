@@ -7,7 +7,7 @@ import Form from './Form'
 const TodoView = () => {
   const [todos, setTodos] = useState([])
 
-  const backgroundImageUrl = process.env.REACT_APP_BACKGROUND_IMAGE_URL
+  const backgroundImageUrl = window.location.href + 'background'
 
   const refreshTodos = async () => {
     const { data } = await axios.get('/todos')
