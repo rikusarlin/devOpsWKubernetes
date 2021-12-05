@@ -23,15 +23,43 @@ spec:
             claimName: todo-claim
       containers:
         - name: todo-backend
-          image: rikusarlin/todo-backend:version11
+          image: PROJECT/IMAGE_BACKEND
           volumeMounts:
           - name: shared-dir
             mountPath: /tmp/pictures
-          envFrom:
-          - configMapRef:
-              name: todo-configmap
+          env:
+            - name: POSTGRE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_host
+            - name: POSTGRE_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_db
+            - name: POSTGRE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_user
+            - name: POSTGRE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_password
+            - name: POSTGRE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: postgre_port
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: port
         - name: todo-frontend
-          image: rikusarlin/todo-frontend:version10
+          image: PROJECT/IMAGE_FRONTEND
       initContainers:
         - name: change-ownership-container
           image: busybox

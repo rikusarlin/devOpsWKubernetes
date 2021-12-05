@@ -4,7 +4,6 @@ metadata:
   name: todo-pv
   namespace: todo-namespace
 spec:
-  storageClassName: manual
   capacity:
     storage: 1Gi 
   volumeMode: Filesystem 

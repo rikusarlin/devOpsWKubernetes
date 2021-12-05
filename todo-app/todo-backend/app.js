@@ -96,6 +96,12 @@ const getRandomWikiUrl = async () => {
   return res.headers.location;
 }
 
+app.get('/', async (req, res) => {
+  // This is for readiness probe
+  console.log("in backend GET /");
+  res.status(200).send("OK");
+})
+
 app.get('/todos', async (req, res) => {
   console.log("in GET /todos");
   const rows = await db.getAllTodos();

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: todo-configmap
+    namespace: todo-namespace
+data:
+    postgre_host: postgres-todo-svc
+    postgre_port: "5432"
+    postgre_db: todo
+    postgre_user: postgres
+    postgre_password: testpassword
+    port: "3001"
