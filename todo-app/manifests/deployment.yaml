@@ -27,6 +27,10 @@ spec:
           volumeMounts:
           - name: shared-dir
             mountPath: /tmp/pictures
+          resources:
+            limits:
+              cpu: "10m"
+              memory: "80Mi"
           env:
             - name: POSTGRE_HOST
               valueFrom:
@@ -60,6 +64,10 @@ spec:
                   key: port
         - name: todo-frontend
           image: IMAGE_FRONTEND
+          resources:
+            limits:
+              cpu: "10m"
+              memory: "80Mi"
       initContainers:
         - name: change-ownership-container
           image: busybox

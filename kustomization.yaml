@@ -10,6 +10,7 @@ resources:
 - ./todo-app/manifests/configmap.yaml
 - ./todo-app/manifests/postgresql-service.yaml
 - ./todo-app/manifests/postgresql-statefulset.yaml
+- ./todo-app/manifests/hpa.yaml
 images:
 # These will be replaced by real names in build pipeline
 - name: IMAGE_BACKEND

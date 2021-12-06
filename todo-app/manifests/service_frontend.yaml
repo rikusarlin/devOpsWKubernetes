@@ -4,7 +4,7 @@ metadata:
   name: todo-frontend-svc
   namespace: todo-namespace
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: todo-app
   ports:
