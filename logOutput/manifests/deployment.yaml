@@ -21,7 +21,13 @@ spec:
           image: rikusarlin/log-reader:version6
           readinessProbe:
             initialDelaySeconds: 10
-            periodSeconds: 10
+            periodSeconds: 5
+            httpGet:
+               path: /readyz
+               port: 3000
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
             httpGet:
                path: /readyz
                port: 3000

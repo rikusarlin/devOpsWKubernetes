@@ -22,6 +22,12 @@ spec:
             httpGet:
                path: /readyz
                port: 3002
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+               path: /readyz
+               port: 3002
           env:
           - name: POSTGRE_HOST
             valueFrom:
