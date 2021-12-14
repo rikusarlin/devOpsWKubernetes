@@ -18,7 +18,13 @@ spec:
           emptyDir: {}
       containers:
         - name: log-reader
-          image: rikusarlin/log-reader:version5
+          image: rikusarlin/log-reader:version6
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            httpGet:
+               path: /readyz
+               port: 3000
           volumeMounts:
           - name: shared-dir2
             mountPath: /tmp/timestamp

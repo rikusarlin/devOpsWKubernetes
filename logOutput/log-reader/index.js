@@ -16,6 +16,15 @@ app.get('/', function(req, res) {
   res.send(currentStatus);
 });
 
+app.get('/readyz', async function(req, res) {
+  try {
+    const response = await axios.get(process.env.PINGPONG_URL);
+    return res.status(200).send("OK");
+  } catch (e) {
+    return res.status(500).send("NO_CONNECTION");
+  }
+});
+
 app.listen(port, function() {
   console.log(`Server started in port ${port}!`)
 });

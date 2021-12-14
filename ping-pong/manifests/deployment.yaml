@@ -15,7 +15,13 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: rikusarlin/ping-pong:version7
+          image: rikusarlin/ping-pong:version9
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            httpGet:
+               path: /readyz
+               port: 3002
           env:
           - name: POSTGRE_HOST
             valueFrom:

@@ -12,6 +12,18 @@ const pool = new Pool({
   port: process.env.POSTGRE_PORT,
 });
 
+const isConnectionOk = async() => {
+    try {
+        const conn = await pool.connect();
+        conn.release();
+        console.log("got connection to db - connection ok");
+        return true;
+    } catch(e) {
+        console.log("could not get connection to db - connection not ok");
+        return false;
+    }    
+}
+
 const getHits = async () => {
     try {
         const results = await pool.query('SELECT hits FROM pingpongdata');
@@ -33,5 +45,6 @@ const updateHits = async () => {
 
 export default {
     getHits,
-    updateHits
+    updateHits,
+    isConnectionOk
 }

@@ -25,6 +25,18 @@ app.get('/hits', async function(req, res) {
   res.send(`${currentHits}`);  
 });
 
+
+app.get('/readyz', async function(req, res) {
+  const isConnection= await db.isConnectionOk();
+  console.log("isConnectionOk: "+isConnection);
+  if(isConnection){
+    res.status(200).send("OK");
+  } else {
+    res.status(500).send("NO_CONNECTION");
+  }
+});
+
+
 app.listen(port, function() {
   console.log(`Server started in port ${port}!`)
 });
